@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Test report') {
             steps {
-                bat 'mvn -Dtest=GroupDaoTest test --fail-never'
+                bat 'mvn test --fail-never'
             }
         }
         stage('Doc') {

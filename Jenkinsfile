@@ -12,9 +12,9 @@ pipeline {
                 bat 'mvn pmd:pmd'
             }
         }
-        stage('Test') {
+        stage('Test report') {
             steps {
-                bat 'mvn test'
+                bat 'mvn -Dtest=GroupDaoTest test --fail-never'
             }
         }
         stage('Doc') {

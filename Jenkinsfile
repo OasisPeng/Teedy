@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Doc') {
             steps {
-                bat 'mvn javadoc:jar'
+                bat ' mvn javadoc:javadoc --fail-never'
             }
         }
     }

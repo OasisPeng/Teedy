@@ -1,16 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Print Maven Version') {
-            steps {
-                bat 'mvn --version'
-            }
-        }
-        stage('Print Java Version') {
-            steps {
-                bat 'java --version'
-            }
-        }
         stage('Build') {
             steps {
                 bat 'mvn -B -DskipTests clean package'

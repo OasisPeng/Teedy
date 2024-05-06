@@ -21,7 +21,7 @@ pipeline {
 
         stage('Test report') {
             steps {
-                bat 'mvn test --fail-never'
+                bat 'mvn test'
             }
         }
     }

@@ -8,6 +8,7 @@ pipeline {
         }
         stage('pmd') {
             steps {
+                bat 'mvn clean -DskipTests install'
                 bat 'mvn pmd:pmd'
             }
         }

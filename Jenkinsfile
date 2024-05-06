@@ -3,32 +3,32 @@ pipeline {
     stages {
         stage('Print Maven Version') {
             steps {
-                powershell 'mvn --version'
+                bat 'mvn --version'
             }
         }
         stage('Print Java Version') {
             steps {
-                powershell 'java --version'
+                bat 'java --version'
             }
         }
         stage('Build') {
             steps {
-                powershell 'mvn -B -DskipTests clean package'
+                bat 'mvn -B -DskipTests clean package'
             }
         }
         stage('pmd') {
             steps {
-                powershell 'mvn pmd:pmd'
+                bat 'mvn pmd:pmd'
             }
         }
         stage('Test') {
             steps {
-                powershell 'mvn test'
+                bat 'mvn test'
             }
         }
         stage('Doc') {
             steps {
-                powershell 'mvn javadoc:jar'
+                bat 'mvn javadoc:jar'
             }
         }
     }

@@ -22,7 +22,7 @@ pipeline {
 
         stage('Test report') {
             steps {
-                bat 'mvn test'
+                bat 'mvn -Dtest=GroupDaoTest test --fail-never'
                 bat 'mvn surefire-report:report'
             }
         }

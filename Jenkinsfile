@@ -16,12 +16,14 @@ pipeline {
         stage('Doc') {
             steps {
                 bat 'mvn javadoc:jar --fail-never'
+
             }
         }
 
         stage('Test report') {
             steps {
                 bat 'mvn test'
+                bat 'mvn surefire-report:report'
             }
         }
     }

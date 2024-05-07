@@ -33,7 +33,7 @@ pipeline {
             archiveArtifacts artifacts: '**/target/**/*.jar', fingerprint: true
             archiveArtifacts artifacts: '**/target/**/*.war', fingerprint: true
             archiveArtifacts artifacts: 'target/site/surefire-report/*', fingerprint: true
-            junit '**/target/surefire-reports/**/*.xml'
+            junit '**/target/site/surefire-reports/**/*.xml'
         }
     }
 }

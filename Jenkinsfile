@@ -22,7 +22,7 @@ pipeline {
 
         stage('Test report') {
             steps {
-                bat 'mvn test --fail-never'
+                bat 'mvn test'
                 bat 'mvn surefire-report:report'
             }
         }
@@ -32,6 +32,7 @@ pipeline {
             archiveArtifacts artifacts: '**/target/site/**', fingerprint: true
             archiveArtifacts artifacts: '**/target/**/*.jar', fingerprint: true
             archiveArtifacts artifacts: '**/target/**/*.war', fingerprint: true
+            archiveArtifacts artifacts: 'target/site/surefire-report/*', fingerprint: true
             junit '**/target/surefire-reports/**/*.xml'
         }
     }

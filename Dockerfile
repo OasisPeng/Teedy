@@ -72,4 +72,5 @@ ADD docs-web/target/docs-web-*.war /app/webapps/docs.war
 
 WORKDIR /app
 
-CMD ["/usr/share/jetty9/bin/jetty.sh", "run"]
+# CMD ["/usr/share/jetty9/bin/jetty.sh", "run"]
+CMD ["/opt/jetty/bin/jetty.sh", "run"]

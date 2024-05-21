@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        KUBECONFIG = credentials('2') 
+        KUBECONFIG = credentials('3') 
     }
     stages {
         stage('Build') {

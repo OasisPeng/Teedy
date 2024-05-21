@@ -1,39 +1,17 @@
 pipeline {
     agent any
     stages {
-//         stage('Build') {
-//             steps {
-//                 bat 'mvn -B -DskipTests clean package'
-//             }
-//         }
-//         stage('pmd') {
-//             steps {
-//                 bat 'mvn clean -DskipTests install'
-//                 bat 'mvn pmd:pmd'
-//             }
-//         }
-
-        stage('Doc') {
+        stage('Build') {
             steps {
-                bat 'mvn javadoc:jar --fail-never'
-
+                bat 'mvn -B -DskipTests clean package'
             }
         }
-
-        stage('Test report') {
+        stage('K8s') {
             steps {
-                bat 'mvn -Dtest=GroupDaoTest test --fail-never'
-                bat 'mvn surefire-report:report'
+                script {
+                    def imageName = 'jasmine84444/teedy:latest'
+                    sh "kubectl set image deployments/hello-node container-name=$imageName"
+                }
             }
         }
-    }
-    post {
-        always {
-            archiveArtifacts artifacts: '**/target/site/**', fingerprint: true
-            archiveArtifacts artifacts: '**/target/**/*.jar', fingerprint: true
-            archiveArtifacts artifacts: '**/target/**/*.war', fingerprint: true
-            archiveArtifacts artifacts: 'target/site/surefire-report/*', fingerprint: true
-            junit '**/target/site/surefire-reports/**/*.xml'
-        }
-    }
 }

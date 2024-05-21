@@ -72,4 +72,4 @@ ADD docs-web/target/docs-web-*.war /app/webapps/docs.war
 
 WORKDIR /app
 
-CMD ["java", "-jar", "/opt/jetty/start.jar"]
+CMD ["/usr/share/jetty9/bin/jetty.sh", "run"]

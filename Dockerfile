@@ -11,6 +11,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
 ENV JAVA_OPTIONS -Dfile.encoding=UTF-8 -Xmx1g
 ENV JETTY_VERSION 9.4.54.v20240208
 ENV JETTY_HOME /opt/jetty
+ENV JETTY_BASE /opt/jetty-base
 
 # Install packages
 RUN apt-get update && \
@@ -56,18 +57,22 @@ RUN wget -nv -O /tmp/jetty.tar.gz \
     && tar xzf /tmp/jetty.tar.gz -C /opt \
     && mv /opt/jetty* /opt/jetty \
     && useradd jetty -U -s /bin/false \
-    && chown -R jetty:jetty /opt/jetty \
-    && mkdir /opt/jetty/webapps \
+    && mkdir -p /opt/jetty-base/webapps \
+    && chown -R jetty:jetty /opt/jetty /opt/jetty-base \
     && chmod +x /opt/jetty/bin/jetty.sh
 
 EXPOSE 8081
 
-# Add the application files to the Jetty webapps directory
-ADD docs.xml ${JETTY_HOME}/webapps/docs.xml
-ADD docs-web/target/docs-web-*.war ${JETTY_HOME}/webapps/docs.war
+# Configure Jetty Base
+RUN cd /opt/jetty-base && \
+    java -jar /opt/jetty/start.jar --add-to-start=server,http,webapp,deploy
 
-# Set the working directory to the Jetty home
-WORKDIR ${JETTY_HOME}
+# Add the application files to the Jetty webapps directory
+ADD docs.xml ${JETTY_BASE}/webapps/docs.xml
+ADD docs-web/target/docs-web-*.war ${JETTY_BASE}/webapps/docs.war
+
+# Set the working directory to the Jetty base
+WORKDIR ${JETTY_BASE}
 
 # Start Jetty
 CMD ["/opt/jetty/bin/jetty.sh", "run"]

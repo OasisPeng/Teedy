@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        KUBECONFIG = credentials('3') 
+        KUBECONFIG = credentials('/var/lib/jenkins/.kube/config') 
     }
     stages {
         stage('Build') {

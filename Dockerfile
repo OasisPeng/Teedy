@@ -62,15 +62,12 @@ RUN wget -nv -O /tmp/jetty.tar.gz \
 
 EXPOSE 8081
 
-# Install app
-RUN mkdir /app && \
-    cd /app && \
-    java -jar /opt/jetty/start.jar --add-modules=server,http,webapp,deploy
+# Add the application files to the Jetty webapps directory
+ADD docs.xml ${JETTY_HOME}/webapps/docs.xml
+ADD docs-web/target/docs-web-*.war ${JETTY_HOME}/webapps/docs.war
 
-ADD docs.xml /app/webapps/docs.xml
-ADD docs-web/target/docs-web-*.war /app/webapps/docs.war
+# Set the working directory to the Jetty home
+WORKDIR ${JETTY_HOME}
 
-WORKDIR /app
-
-# CMD ["/usr/share/jetty9/bin/jetty.sh", "run"]
+# Start Jetty
 CMD ["/opt/jetty/bin/jetty.sh", "run"]
